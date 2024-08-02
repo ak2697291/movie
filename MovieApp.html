@@ -352,7 +352,7 @@
     </header>
 
     <div id="container">
-        <select id="videoType">
+        <select id="videoType" onchange="updateIframe()">
             <option value="movie">Movie</option>
             <option value="tv">TV</option>
         </select>
@@ -364,8 +364,8 @@
         <div id="options">
             <div id="tvOptions" style="display: none;">
                 <input type="hidden" id="tmdbId" placeholder="Insert TMDB ID">
-                <select id="season"></select>
-                <select id="episode"></select>
+                <select id="season" oninput="updateIframe()"></select>
+                <select id="episode" oninput="updateIframe()"></select>
             </div>
 
             <div id="movieOptions" style="display: none;">
