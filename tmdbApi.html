@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #111;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #111;
+            padding: 10px;
+            text-align: center;
+        }
+
+        #container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        select, input, button {
+            width: calc(50% - 10px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #333;
+            color: #fff;
+            display: inline-block;
+            box-sizing: border-box;
+        }
+
+        select {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #e50914;
+            cursor: pointer;
+            width: calc(50% - 10px);
+            margin-left: 5px;
+        }
+
+        button:hover {
+            background-color: #f40612;
+        }
+
+        iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+            border-radius: 8px;
+        }
+
+        #options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        #options div {
+            width: calc(50% - 10px);
+            box-sizing: border-box;
+        }
+
+        #tvOptions {
+            display: none;
+            flex-direction: column;
+        }
+
+        #tvOptions select, #tvOptions input {
+            margin-bottom: 10px;
+        }
+
+        #suggestions {
+            background-color: #333;
+            color: #fff;
+            position: absolute;
+            z-index: 1000;
+            width: calc(50% - 10px);
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #444;
+            display: none;
+        }
+
+        #suggestions div {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        #suggestions div:hover {
+            background-color: #555;
+        }
+
+        @media screen and (max-width: 600px) {
+            select, input, button {
+                width: 100%;
+            }
+
+            #options div {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+    <script>
+        const apiKey = 'c89b1347cea1dc51dd9c01e46e1375b1';
+
+        function updateIframe() {
+            var iframe = document.getElementById('videoFrame');
+            var selectOption = document.getElementById('videoType').value;
+            var tmdbId;
+
+            if (selectOption === 'tv') {
+                tmdbId = document.getElementById('tmdbId').value;
+                var season = document.getElementById('season').value || 1;
+                var episode = document.getElementById('episode').value || 1;
+                var srcUrl = `https://www.2embed.cc/embedtv/${tmdbId}&s=${season}&e=${episode}`;
+                document.getElementById('tvOptions').style.display = 'flex';
+                document.getElementById('movieOptions').style.display = 'none';
+            } else {
+                tmdbId = document.getElementById('tmdbIdMovie').value;
+                var srcUrl = `https://www.2embed.cc/embed/${tmdbId}`;
+                document.getElementById('tvOptions').style.display = 'none';
+                document.getElementById('movieOptions').style.display = 'flex';
+            }
+
+            iframe.src = srcUrl;
+        }
+
+        function fetchTmdbId(query, type) {
+            fetch(`https://api.themoviedb.org/3/search/${type}?api_key=${apiKey}&query=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.results && data.results.length > 0) {
+                        const tmdbId = data.results[0].id;
+                        if (type === 'tv') {
+                            document.getElementById('tmdbId').value = tmdbId;
+                            fetchTvDetails(tmdbId);
+                        } else {
+                            document.getElementById('tmdbIdMovie').value = tmdbId;
+                        }
+                        updateIframe();
+                    } else {
+                        alert('No results found.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching TMDb ID:', error);
+                });
+        }
+
+        function fetchSuggestions(query, type) {
+            fetch(`https://api.themoviedb.org/3/search/${type}?api_key=${apiKey}&query=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    const suggestionsBox = document.getElementById('suggestions');
+                    suggestionsBox.innerHTML = '';
+                    if (data.results && data.results.length > 0) {
+                        data.results.forEach(item => {
+                            const suggestionItem = document.createElement('div');
+                            suggestionItem.textContent = item.name || item.title;
+                            suggestionItem.onclick = () => {
+                                document.getElementById('searchQuery').value = item.name || item.title;
+                                if (type === 'tv') {
+                                    document.getElementById('tmdbId').value = item.id;
+                                    fetchTvDetails(item.id);
+                                } else {
+                                    document.getElementById('tmdbIdMovie').value = item.id;
+                                }
+                                updateIframe();
+                                suggestionsBox.style.display = 'none';
+                            };
+                            suggestionsBox.appendChild(suggestionItem);
+                        });
+                        suggestionsBox.style.display = 'block';
+                    } else {
+                        suggestionsBox.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching suggestions:', error);
+                });
+        }
+
+        function fetchTvDetails(tmdbId) {
+            fetch(`https://api.themoviedb.org/3/tv/${tmdbId}?api_key=${apiKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    const seasonSelect = document.getElementById('season');
+                    seasonSelect.innerHTML = '';
+                    data.seasons.forEach((season, index) => {
+                        const option = document.createElement('option');
+                        option.value = index + 1;
+                        option.textContent = `Season ${index + 1}`;
+                        seasonSelect.appendChild(option);
+                    });
+
+                    fetchEpisodes(tmdbId, 1); // Fetch episodes for the first season by default
+
+                    seasonSelect.onchange = () => {
+                        fetchEpisodes(tmdbId, seasonSelect.value);
+                    };
+                })
+                .catch(error => {
+                    console.error('Error fetching TV details:', error);
+                });
+        }
+
+        function fetchEpisodes(tmdbId, seasonNumber) {
+            fetch(`https://api.themoviedb.org/3/tv/${tmdbId}/season/${seasonNumber}?api_key=${apiKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    const episodeSelect = document.getElementById('episode');
+                    episodeSelect.innerHTML = '';
+                    data.episodes.forEach((episode, index) => {
+                        const option = document.createElement('option');
+                        option.value = index + 1;
+                        option.textContent = `Episode ${index + 1}`;
+                        episodeSelect.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching episodes:', error);
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var videoTypeDropdown = document.getElementById('videoType');
+            videoTypeDropdown.value = 'movie';
+            var event = new Event('change');
+            videoTypeDropdown.dispatchEvent(event);
+
+            updateIframe();
+
+            document.getElementById('searchQuery').addEventListener('input', function () {
+                var query = document.getElementById('searchQuery').value;
+                var type = document.getElementById('videoType').value;
+                if (query.length > 2) {
+                    fetchSuggestions(query, type);
+                } else {
+                    document.getElementById('suggestions').style.display = 'none';
+                }
+            });
+
+            document.getElementById('searchButton').addEventListener('click', function () {
+                var query = document.getElementById('searchQuery').value;
+                var type = document.getElementById('videoType').value;
+                fetchTmdbId(query, type);
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1 style="color: #e50914;">My Movies</h1>
+    </header>
+
+    <div id="container">
+        <select id="videoType" onchange="updateIframe()">
+            <option value="tv">TV</option>
+            <option value="movie">Movie</option>
+        </select>
+
+        <input type="text" id="searchQuery" placeholder="Search for a movie or TV show">
+        <button id="searchButton">Search</button>
+        <div id="suggestions"></div>
+
+        <div id="options">
+            <div id="tvOptions" style="display: none;">
+                <input type="hidden" id="tmdbId" placeholder="Insert TMDB ID" oninput="updateIframe()">
+                <select id="season" oninput="updateIframe()"></select>
+                <select id="episode" oninput="updateIframe()"></select>
+            </div>
+
+            <div id="movieOptions" style="display: none;">
+                <input type="hidden" id="tmdbIdMovie" placeholder="Insert TMDB ID" oninput="updateIframe()">
+            </div>
+        </div>
+
+        <iframe id="videoFrame" src="" allowfullscreen></iframe>
+    </div>
+</body>
+</html>
