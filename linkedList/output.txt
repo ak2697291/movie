@@ -1,0 +1,13 @@
+Enter the data for root Node:
+enter the data for inserting in left of1
+enter the data for inserting in left of2
+enter the data for inserting in left of3
+enter the data for inserting in left of4
+enter the data for inserting in left of5
+enter the data for inserting in left of6
+enter the data for inserting in right of6
+enter the data for inserting in right of5
+enter the data for inserting in right of4
+enter the data for inserting in right of3
+enter the data for inserting in right of2
+enter the data for inserting in right of1
