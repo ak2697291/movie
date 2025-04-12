@@ -1,0 +1,229 @@
+1. Shortest Distance
+
+	i) Dijkstra's Algorithm
+
+		a) It is a popular algorithm to find the shortest distance from a single source node 
+		   to all other nodes in a weighted, directed or undirected graph (with non-negative weights).
+
+		b) It works by selecting the nearest unvisited vertex and updating the distances 
+		   to all its unvisited neighboring vertices accordingly.
+
+		c) Steps of the Algorithm:
+			i)   First, define a min priority queue.
+			ii)  Create a distance array of size equal to the number of nodes. 
+			     Initialize all distances from the source node as INT_MAX, 
+			     except for the source node itself, which should be set to 0.
+			iii) Push the first element as (0, source) into the priority queue.
+			iv)  Enter a while loop that continues until the priority queue is empty.
+			v)   Retrieve the top element from the priority queue.
+			vi)  Define a terminating condition for the loop if needed 
+			     (e.g., stop when the destination node is reached).
+			vii) Loop through all adjacent nodes of the current node.
+			viii)If currentNodeDistance + edgeWeight < distance[childNode], 
+			     then update distance[childNode] = currentNodeDistance + edgeWeight.
+			ix)  Push the updated (distance[childNode], childNode) into the priority queue.
+			x)   Repeat the process until the queue is empty or the terminating condition is met.
+
+
+	ii) Bellman-Ford Algorithm
+
+		a) It is well-suited for finding the shortest paths in a directed graph 
+		   with one or more negative edge weights, from a single source to all other vertices.
+
+		b) The algorithm works by checking all edges repeatedly for n - 1 times 
+		   (where n is the number of vertices). 
+		   If any distance still updates on the nth iteration, then a negative cycle exists.
+
+		c) Steps of the Algorithm:
+			i)   Define a distance array of size equal to the number of nodes. 
+			     Initialize all distances from the source node to INT_MAX, 
+			     except the source which should be 0.
+			ii)  Run a for loop for n times (where n is the number of nodes).
+			iii) Initialize a flag isChanged = false to track if any updates happen during the iteration.
+			iv)  Loop through each edge of the graph: (u, v, w).
+			v)   If distance[u] + w < distance[v], 
+			     then update distance[v] = distance[u] + w and set isChanged = true.
+			vi)  At the end of each iteration, check isChanged:
+				 - If false, exit the loop early since no further improvements are possible.
+				 - If true, continue to the next iteration.
+			vii) After all iterations, if the loop runs exactly n times, 
+			     it indicates the presence of a negative cycle.
+
+
+	iii) Floyd-Warshall Algorithm
+
+		a) This algorithm is best suited for finding all pairs shortest paths in a weighted graph. 
+		   It supports both directed and undirected graphs and handles negative weights 
+		   (but not negative cycles).
+
+		b) The idea is to improve the shortest path between any two vertices (i, j) 
+		   by checking if there is a vertex k such that going through k gives a shorter path.
+
+		c) Steps of the Algorithm:
+			i)   Define a matrix of size n x n (where n is the number of nodes) 
+			     and initialize all values to INT_MAX.
+			ii)  Set mat[i][i] = 0 for all i from 0 to n-1, 
+			     since the distance from a node to itself is zero.
+			iii) Update the matrix with given edge weights (u, v, w) as mat[u][v] = w.
+			iv)  Run three nested for loops:
+				 - Outer loop on k (intermediate vertex)
+				 - Middle loop on i (row / source)
+				 - Inner loop on j (column / destination)
+			v)   For every triplet (i, j, k), check:
+				 - If mat[i][k] != INT_MAX and mat[k][j] != INT_MAX and 
+				   mat[i][j] > mat[i][k] + mat[k][j], 
+				   then update mat[i][j] = mat[i][k] + mat[k][j].
+			vi)  After completion, the matrix will contain 
+			     the shortest distances between all pairs of nodes.
+
+2. Minimum Spanning Trees:
+
+i) Kruskal's Algorithm (with Min Priority Queue)
+    a) It is used to find the Minimum Spanning Tree (MST) of a connected, undirected, weighted graph.
+    b) Kruskal's algorithm picks the edges with the smallest weights, one by one, and adds them to the MST if they don’t form a cycle.
+    c) To detect cycles efficiently, it uses a Disjoint Set (Union-Find data structure).
+    d) Normally, edges are sorted by weight in ascending order. But we can also use a Min Priority Queue (Min Heap) to always get the smallest edge dynamically.
+    e) Data Structures Used:
+        i) Min Priority Queue (to pick smallest weight edge)
+        ii) Disjoint Set (to track connected components)
+    f) Steps of the Algorithm:
+        i) Define a min priority queue (PQ) and push all edges (u, v, w) into it: PQ.push({w, u, v})
+        ii) Initialize the disjoint set for all nodes: parent[node] = node, size[node] = 1
+        iii) Initialize MST weight = 0 and an empty list to store MST edges.
+        iv) While priority queue is not empty and MST edge count < n - 1:
+            - Get the top element from PQ: (w, u, v) = PQ.top(); PQ.pop()
+            - If findParent(u) != findParent(v): (i.e., they are not in same component)
+                - Add the edge to MST: mst.push_back({u, v})
+                - Add weight to total: MST_weight += w
+                - Union(u, v) → merge the components
+        v) Final MST will be the list of selected edges, and total weight will be MST_weight.
+
+
+    g) Time Complexity:
+        → O(E log E) due to sorting and Union-Find optimizations.
+
+ii) Prim's Algorithm
+    a) Purpose:
+        → Build the MST by growing from a starting node, always choosing the minimum edge.
+
+    b) Core Idea:
+        → Greedily pick the smallest edge connecting the visited set to an unvisited node.
+
+    c) Data Structures Used:
+        - Min-Heap (Priority Queue) to get the next lightest edge quickly.
+        - Adjacency list to represent the graph.
+        - distance array to store the current minimum edge weight for each node.
+        - Visited array to track the MST set.
+
+    d) Steps of the Algorithm:
+        i) distance[i] = INT_MAX for all nodes; distance[src] = 0
+        ii) visited[i] = false for all nodes
+        iii) minHeap = [(0, src)]
+        iv) while minHeap is not empty:
+            → pop (distance_val, u)
+            → if visited[u]: continue
+            → visited[u] = true
+            → for each (v, weight) in adj[u]:
+                - if not visited[v] and weight < distance[v]:
+                    → distance[v] = weight
+                    → push (distance[v], v) to minHeap
+
+    e) Time Complexity:
+        → O(E log V) with min-heap and adjacency list.
+
+---
+
+3. Disjoint Set:
+
+i) Union-Find
+    a) Purpose:
+        → Maintain disjoint sets and quickly perform union and find operations.
+
+    b) Use Cases:
+        → Detect cycles in Kruskal's algorithm.
+        → Group connected components.
+
+    c) Data Structures Used:
+        - parent[]: To keep track of the parent of each node.
+        - rank[]: To optimize union operation.
+
+    d) key Operations:
+        i) find(x):
+            if parent[x] != x:
+                parent[x] = find(parent[x])     // Path compression
+            return parent[x]
+
+        ii) union(x, y):
+            rootX = find(x)
+            rootY = find(y)
+            if rootX == rootY:
+                return
+            if rank[rootX] < rank[rootY]:
+                parent[rootX] = rootY
+            else if rank[rootX] > rank[rootY]:
+                parent[rootY] = rootX
+            else:
+                parent[rootY] = rootX
+                rank[rootX] += 1
+
+    e) Time Complexity:
+        → Near constant, O(α(n)), where α is the inverse Ackermann function.
+
+---
+
+4. Topological Sorting:
+
+i) DFS-Based Topological Sort
+    a) Purpose:
+        → Sort the vertices of a Directed Acyclic Graph (DAG) such that for every directed edge u → v, u comes before v.
+
+    b) Core Idea:
+        → Perform a DFS and store nodes based on their finishing time.
+
+    c) Data Structures Used:
+        - Visited[]: Boolean array.
+        - Stack: To maintain the topological order.
+
+    d) Steps:
+        i) For each unvisited node u:
+            → DFS(u)
+        ii) Inside DFS(u):
+            → visited[u] = true
+            → for each neighbor v of u:
+                - if not visited[v]:
+                    DFS(v)
+            → push u to stack
+        iii) Once all DFS calls finish, reverse the stack for the topological order.
+
+    e) Time Complexity:
+        → O(V + E)
+
+---
+
+5. Strongly Connected Components:
+
+i) Kosaraju's Algorithm
+    a) Purpose:
+        → Find all strongly connected components (SCCs) in a directed graph.
+
+    b) Core Idea:
+        → Do two DFS traversals: one on original graph and one on the transpose graph.
+
+    c) Data Structures Used:
+        - Stack: To store vertices by finish time in the first DFS.
+        - Visited[]: Boolean array.
+        - Adjacency list and Transpose list.
+
+    d) Steps:
+        i) First DFS:
+            → for each unvisited node u:
+                DFS(u), push u to stack after recursion finishes.
+        ii) Reverse the graph (transpose all edges).
+        iii) Clear the visited array.
+        iv) Second DFS:
+            → Pop elements from the stack.
+            → For each unvisited node, DFS on the transposed graph.
+            → Each DFS result gives one SCC.
+
+    e) Time Complexity:
+        → O(V + E)

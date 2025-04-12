@@ -24,11 +24,11 @@ void createAdjacencyMatrix(int n, int m)
         cout << endl;
     }
 }
-unordered_map<int, vector<int>> createAdjacencyList(int n, int m)
+unordered_map<int, vector<int> > createAdjacencyList(int n, int m)
 {
 
     vector<int> adjList[n + 1];
-    unordered_map<int, vector<int>> mal;
+    unordered_map<int, vector<int> > mal;
     for (int i = 0; i < m; i++)
     {
         int u, v;
@@ -64,7 +64,7 @@ unordered_map<int, vector<int>> createAdjacencyList(int n, int m)
     return mal;
 }
 
-void bfs(int n, unordered_map<int, vector<int>> adjMap)
+void bfs(int n, unordered_map<int, vector<int> > adjMap)
 {
     int vis[n];
     memset(vis, 0, sizeof(vis));
@@ -89,7 +89,7 @@ void bfs(int n, unordered_map<int, vector<int>> adjMap)
         }
     }
 }
-void dfs(int vis[], unordered_map<int, vector<int>> adjMap, int node)
+void dfs(int vis[], unordered_map<int, vector<int> > adjMap, int node)
 {
     vis[node] = 1;
     cout << node << " ";
@@ -100,7 +100,7 @@ void dfs(int vis[], unordered_map<int, vector<int>> adjMap, int node)
             dfs(vis, adjMap, x);
     }
 }
-unordered_map<int, vector<pair<int, int>>> createWeightedGraph(int n, int m)
+unordered_map<int, vector<pair<int, int> > > createWeightedGraph(int n, int m)
 {
     /*
     6 8
@@ -114,7 +114,7 @@ unordered_map<int, vector<pair<int, int>>> createWeightedGraph(int n, int m)
     5 6 5
     */
 
-    unordered_map<int, vector<pair<int, int>>> graph;
+    unordered_map<int, vector<pair<int, int> > > graph;
     for (int i = 0; i < m; i++)
     {
         int u, v, w;
@@ -125,12 +125,12 @@ unordered_map<int, vector<pair<int, int>>> createWeightedGraph(int n, int m)
     return graph;
 }
 
-void dijkstraAlgo(unordered_map<int, vector<pair<int, int>>> &graph, int n, int m)
+void dijkstraAlgo(unordered_map<int, vector<pair<int, int> > > &graph, int n, int m)
 {
 
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    priority_queue<pair<int, int>, vector<pair<int, int> >, greater<pair<int, int> > > pq;
     unordered_map<int, int> path;
-    int source = 1, end = 6;
+    int source = 1, end = n;
     pq.push(make_pair(0, source));
 
     int distance[100];
@@ -189,6 +189,171 @@ void dijkstraAlgo(unordered_map<int, vector<pair<int, int>>> &graph, int n, int 
     }
 }
 
+void bellmanFordAlgo(unordered_map<int, vector<pair<int, int> > > & graph, int n, int m) {
+
+    /*
+    graph for negative cycle
+    4 5
+    3 2 -10
+    4 3 3
+    1 4 5
+    1 2 4
+    2 4 5
+    */
+    int source = 1;
+    vector<int> distance(n+1, INT_MAX);
+    distance[1] = 0;
+    int i;
+    for(i = 1; i<=n;i++) {
+        bool isChanged = false;
+
+        for(int j=1;j<=n;j++) {
+            for(auto[curNode, weight] : graph[j]) {
+                
+                if (distance[j] + weight < distance[curNode]) {
+                    distance[curNode] = distance[j] + weight;
+                    isChanged = true;
+                }
+            }
+        }
+        if (isChanged == false)
+        break;
+
+    }
+    if (i > n){
+        cout<<endl<<"There is a Negative cycle in the graph"<<endl;
+        return;
+    }
+    cout<<endl<<"Belmann Ford Distance from 1 to all nodes is : ";
+    for(int i=1;i<=n;i++) {
+        cout<<"("<<i<<")"<<"->"<<distance[i]<<", ";
+    }
+    
+}
+void floydwarshallAlgo(unordered_map<int, vector<pair<int, int> > > & graph, int n, int m){
+    /*
+    4 7
+    1 4 7
+    1 2 3
+    2 1 8
+    2 3 2
+    3 1 5
+    3 4 1
+    4 1 2
+    */
+
+    vector<vector<int> > mat(n+1, vector<int> (n+1,INT_MAX));
+    for(int i=1;i<=n;i++) {
+        mat[i][i] = 0;
+    }
+
+    for (auto [u, nodes] : graph) {
+        for(auto [v , w] : nodes) {
+            mat[u][v] = w;
+        }
+    }
+
+    for(int k=1;k<=n;k++) {
+        for(int i=1;i<=n;i++) {
+            for(int j=1;j<=n;j++) {
+                
+                if (mat[i][k] != INT_MAX && mat[k][j] != INT_MAX && (mat[i][k] + mat[k][j] < mat[i][j])) {
+                mat[i][j] = mat[i][k] + mat[k][j];
+
+                }
+            }
+        }
+    }
+    cout<<endl<<"printing all pairs shortest path"<<endl;
+    for(int i=1;i<=n;i++) {
+        cout<<"for node: "<<i<<" ->";
+        for(int j=1;j<=n;j++) {
+            cout<<mat[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+}
+
+int find(vector<int> & parent, int node) {
+
+    if (parent[node] != node) {
+        return find(parent, parent[node]);
+    }else {
+        return node;
+    }
+}
+void doUnion(vector<int> &parent, int a, int b) {
+
+    parent[find(parent,b)] = find(parent, a);
+}
+
+bool validPathWithUnionFind(int n, vector<vector<int> >& edges, int source, int destination) {
+    vector<int> parent(n);
+    for(int i=0;i<n;i++) {
+        parent[i] = i;
+    }
+
+    for (int i=0;i<edges.size();i++) {
+        doUnion(parent, edges[i][0],edges[i][1]);
+    }
+
+
+    int sp = find(parent, source);
+    int dp = find(parent, destination);
+
+    if (sp == dp){
+        return true;
+    }
+
+    return false;
+}
+
+
+int primsMininSpanningTree(vector<vector<int> >& points) {
+
+    unordered_map<int, vector<pair<int,int> > > graph;
+    int n = points.size();
+
+    for (int i=0;i<n-1;i++) {
+        for (int j = i+1; j<n;j++) {
+            int x = points[i][0];
+            int y = points[i][1];
+            int x1 = points[j][0];
+            int y1 = points[j][1];
+            int val = abs(x - x1) + abs(y - y1);
+    
+            graph[i].push_back(make_pair(j, val));
+            graph[j].push_back(make_pair(i, val));
+        }
+    }
+
+
+    int mst = 0;
+    priority_queue<pair<int, pair<int, int> >, vector<pair<int, pair<int, int> > >, greater<pair<int, pair<int, int> > > >  pq;
+    pq.push(make_pair(0, make_pair(0,-1)));
+    vector<int> vis(n, 0);
+
+    while(!pq.empty()) {
+        pair<int, pair<int, int> > top = pq.top();
+        pq.pop();
+        int val = top.first;
+        int node = top.second.first;
+        int parent = top.second.second;
+        if (!vis[node]) {
+            vis[node] = 1;
+            mst += val;
+            for (auto [cnode,cval] : graph[node]) {
+                if (!vis[cnode]) {
+                    pq.push(make_pair(cval, make_pair(cnode,node)));
+                }
+            }
+        }
+    }
+
+
+    return mst;
+
+}
 int main()
 {
 
@@ -199,7 +364,7 @@ int main()
     bool weightedGraph = true;
     if (!weightedGraph)
     {
-        unordered_map<int, vector<int>> adjMap = createAdjacencyList(n, m);
+        unordered_map<int, vector<int> > adjMap = createAdjacencyList(n, m);
 
         // Graph Traversal
         // BFS
@@ -213,8 +378,10 @@ int main()
     }
     else
     {
-        unordered_map<int, vector<pair<int, int>>> weightedGraph = createWeightedGraph(n, m);
+        unordered_map<int, vector<pair<int, int> > > weightedGraph = createWeightedGraph(n, m);
         dijkstraAlgo(weightedGraph, n, m);
+        bellmanFordAlgo(weightedGraph, n,m);
+        floydwarshallAlgo(weightedGraph, n, m);
     }
 }
 
@@ -236,20 +403,20 @@ Disconnected Graphs & Single-node Graphs
 ✅ Depth-First Search (DFS) (Connected components, cycle detection)✅
 ✅ 0/1 BFS (Shortest path in graphs with edge weights of 0 or 1)✅
 ✅ Dijkstra’s Algorithm (For weighted graphs, priority queue usage)✅
-✅ Bellman-Ford Algorithm (Detecting negative cycles)
-✅ Floyd-Warshall Algorithm (All-pairs shortest paths)
+✅ Bellman-Ford Algorithm (Detecting negative cycles)✅
+✅ Floyd-Warshall Algorithm (All-pairs shortest paths)✅
 📌 Common Edge Cases:
 Disconnected components
 Negative weight cycles (Use Bellman-Ford)
 Multiple shortest paths
 Floating-point precision issues (For weighted graphs)
 
-3. Shortest Path Algorithms (Critical for CP)
-✅ BFS for Unweighted Graphs (Fastest way to find shortest path)
-✅ Dijkstra’s Algorithm (Greedy Approach)
+3. Shortest Path Algorithms (Critical for CP)✅
+✅ BFS for Unweighted Graphs (Fastest way to find shortest path)✅
+✅ Dijkstra’s Algorithm (Greedy Approach)✅
 ✅ Bellman-Ford Algorithm (Negative Weights Allowed)
-✅ Floyd-Warshall Algorithm (All-Pairs Shortest Path, O(N³))
-✅ A* Algorithm (Heuristic-based pathfinding, useful in AI & Games)*
+✅ Floyd-Warshall Algorithm (All-Pairs Shortest Path, O(N³))✅
+✅ A* Algorithm (Heuristic-based pathfinding, useful in AI & Games)
 ✅ 0/1 BFS (Deque Optimization for Faster Execution)
 📌 Common Edge Cases:
 Graph with multiple shortest paths
@@ -257,34 +424,34 @@ Handling negative weights correctly
 Disconnected nodes (Infinity in distance array)
 
 4. Cycle Detection (Must-Know for Contests)
-✅ Undirected Graph Cycle Detection (DFS + Parent Check, Union-Find)
-✅ Directed Graph Cycle Detection (DFS Recursion Stack, Kahn’s Algorithm)
-✅ Cycle Detection in a Graph using Disjoint Set (Union-Find Approach)
-✅ Detecting Negative Weight Cycles (Bellman-Ford Algorithm)
+✅ Undirected Graph Cycle Detection (DFS + Parent Check, Union-Find)✅
+✅ Directed Graph Cycle Detection (DFS Recursion Stack, Kahn’s Algorithm)✅
+✅ Cycle Detection in a Graph using Disjoint Set (Union-Find Approach)✅
+✅ Detecting Negative Weight Cycles (Bellman-Ford Algorithm)✅
 📌 Common Edge Cases:
 Self-loops and multiple edges
 Handling graphs with disconnected components
 Cycle involving only a subset of nodes
 
 5. Minimum Spanning Tree (MST) Algorithms
-✅ Kruskal’s Algorithm (Greedy + Union-Find Approach)
-✅ Prim’s Algorithm (Priority Queue-Based Approach)
+✅ Kruskal’s Algorithm (Greedy + Union-Find Approach)✅
+✅ Prim’s Algorithm (Priority Queue-Based Approach)✅
 📌 Common Edge Cases:
 Disconnected graphs (Handle components separately)
 Multiple valid MSTs (Consider lexicographically smallest one)
 Large number of edges (Use adjacency list instead of adjacency matrix)
 
 6. Topological Sorting (Critical for DAG Problems)
-✅ Kahn’s Algorithm (BFS-Based Topological Sorting)
-✅ DFS-Based Topological Sorting
-✅ Cycle Detection in a Directed Graph Using Topological Sort
+✅ Kahn’s Algorithm (BFS-Based Topological Sorting)✅
+✅ DFS-Based Topological Sorting✅
+✅ Cycle Detection in a Directed Graph Using Topological Sort✅
 📌 Common Edge Cases:
 Multiple valid topological orderings
 Graph with cycles (Not a DAG, return failure)
 
 7. Strongly Connected Components (SCCs) & Condensation Graph
-✅ Kosaraju’s Algorithm (2-pass DFS)
-✅ Tarjan’s Algorithm (DFS-based, Low-Link Values)
+✅ Kosaraju’s Algorithm (2-pass DFS)(will use Kosaraju’s algorithm)✅
+✅ Tarjan’s Algorithm (DFS-based, Low-Link Values) 
 ✅ Condensation Graph (Compressing SCCs into a DAG for further processing)
 📌 Common Edge Cases:
 Graph already strongly connected
