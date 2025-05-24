@@ -1,25 +1,32 @@
 #include<bits/stdc++.h>
-
 using namespace std;
-int fact(int n) {
-    if (n==0)
-    return 1;
-    return n * fact(n-1);
-}
-int main() {
- string s;
- cin>>s;
- int n = s.length();
- int arr[26]= {0};
- for(int i = 0;i <n;i++) {
-    int temp = s[i] - 97;
-    arr[temp] = arr[temp] +1;
- }
- int total = fact(n);
- for (int i=0;i<26;i++) {
-    total = total/fact(arr[i]);
- }
- cout << total<<endl;
- 
+#define int long long int
+#define F first
+#define S second
+#define pb push_back
+void solve() {
+   string s;
+   cin>>s;
+   vector<string> result;
+   sort(s.begin(), s.end());
+   do {
+      result.push_back(s);
+   }while(next_permutation(s.begin(), s.end()));
 
+   cout<<result.size()<<endl;
+   for(int i=0;i<result.size();i++) {
+      cout<<result[i]<<endl;
+   }
+
+}
+int32_t main() {
+// #ifndef ONLINE_JUDGE
+// freopen("output.txt", "w", stdout);
+// freopen("input.txt", "r", stdin);
+// #endif
+int t= 1;
+while(t--) {
+solve();
+}
+return 0;
 }
