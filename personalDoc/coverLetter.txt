@@ -29,13 +29,43 @@ Anil Kumar
 
 
 
-2:
+2: 400 Character
 
 Engineer by profession, problem-solver by passion. At Airtel, I’ve built real-time systems with 99% accuracy and AI tools that make tech human. I blend deep tech skills with a purpose-driven mindset—coding not just for efficiency, but for impact. Ready to bring heart and innovation to your team.
 
 
 
+3. 140 Character
+Engineer who brings heart to code—ready to drive innovation, build impactful systems, and solve real-world problems with purpose and precision.
 
 
 
+4. Can you please tell me more about the responsibilities in your current role?
+Current Role Responsibilities – Senior Software Engineer, Airtel
+Designing Event-Driven Architectures
 
+Building real-time systems using Kafka and MongoDB Change Streams to ensure fast, accurate event updates—particularly on the Airtel Thanks for Business (ATB) platform.
+
+Improving System Accuracy and Reliability
+
+Optimized order tracking workflows, improving event accuracy to 99%, ensuring customers and businesses get timely, reliable updates.
+
+Platform Modernization & Migration
+
+Led the migration from Spring Boot 2 to 3 and Java 8 to Java 21, improving code efficiency, leveraging new language features, and ensuring forward compatibility.
+
+AI Integration for Intelligent Systems
+
+Developed a Retrieval-Augmented Generation (RAG) AI Agent to analyze and categorize error events in real-time, significantly enhancing incident response and root cause analysis.
+
+Config-Driven Product Onboarding
+
+Created configurable frameworks for end-to-end product onboarding, reducing manual effort and making the platform more scalable for new services.
+
+Collaboration & Agile Execution
+
+Working in agile teams, collaborating closely with product owners, testers, and DevOps to ensure smooth releases and continuous improvements.
+
+Monitoring, Logging, and Troubleshooting
+
+Utilizing tools like Grafana, Kibana, and Jenkins to monitor application health, track logs, and resolve production issues effectively.

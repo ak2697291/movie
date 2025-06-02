@@ -1,0 +1,14 @@
+Dear Hiring Manager,
+
+I am writing to express my deep interest in the opportunity to contribute as a Software Engineer at your esteemed organization. Coming from the sacred city of Mathura, where stories of perseverance and purpose are passed down through generations, I have carried those same values into my professional journey—driven by curiosity, guided by resilience, and defined by impact.
+
+At Airtel, I have had the privilege to work on systems that millions depend on daily. From designing an event-driven order tracking system with 99% accuracy to migrating core platforms from Java 8 to 21, my work has always focused on efficiency, scalability, and user trust. Whether building a Retrieval-Augmented Generation (RAG) AI Agent to classify error events or implementing real-time solutions with Kafka and MongoDB, I take pride in solving hard problems with heart and precision.
+
+What truly differentiates me is not just my technical expertise, but my emotional investment in what I build. Raised in a culture that honors humility and collective progress, I approach engineering with a sense of duty—systems must be robust because people rely on them. My personal projects—like accessibility tools for the visually impaired and phishing detection extensions—stem from a desire to use technology as a force for good.
+
+I am excited about the chance to bring my skills and spirit to your team. I believe great engineering is not only about writing clean code, but also about writing stories of impact, integrity, and inclusion. I am eager to collaborate, learn, and grow with an organization that values innovation and purpose as deeply as I do.
+
+Thank you for considering my application. I would welcome the opportunity to further discuss how I can contribute to your team’s success.
+
+Warm regards,
+Anil Kumar
