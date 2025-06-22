@@ -1,0 +1,8 @@
+1. Tell me about yourself or introduce yourself:
+
+
+My name is Anil Kumar, and I am a Senior Software Engineer at Airtel with 3 years of experience.
+I have done my B.Tech in computer science and engineering from NIT Bhopal.
+At Airtel, I work on the B2B side of the business, primarily work on event-driven architecture to enhance our order tracking system.
+Recently, I worked on migrating our core platform from Java 8 to Java 21 and from Spring Boot 2 to 3.
+and I enjoy solving the complex problem in simpler ways.
