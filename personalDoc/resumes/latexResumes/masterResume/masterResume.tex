@@ -1,0 +1,136 @@
+\documentclass[a4paper,9pt]{article}
+
+\usepackage{parskip} 
+\usepackage{hologo}
+\usepackage{fontspec}
+
+% other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9, top=.3in, bottom=.3in]{geometry}
+
+% tabularx environment
+\usepackage{tabularx}
+
+% for lists within experience section
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+% to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.42\textwidth}
+
+% custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+\titleformat{\section}{\Large\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{1pt}{1pt}
+
+% for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+% hyperref
+\usepackage[unicode, draft=false]{hyperref}
+\color[HTML]{110223}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+% icons
+\usepackage{fontawesome5}
+
+% underline
+\usepackage[normalem]{ulem}
+
+\setmainfont{Arial}
+
+\begin{document}
+
+\pagestyle{empty} 
+
+% ---------------- Header ----------------
+\begin{tabularx}{\linewidth}{@{} C @{}}
+\color[HTML]{1C033C} \Huge{Anil Kumar} \\[2pt]
+\textcolor[HTML]{371e77}{{\faEnvelope} ak2697291@gmail.com $|$}
+\textcolor[HTML]{371e77}{{\faMobile} +91-6266803923}
+
+\textcolor[HTML]{371e77}{\underline{{\faCode} leetcode.com/u/ak2697291} $|$}
+\textcolor[HTML]{371e77}{\underline{{\faLinkedin} linkedin.com/in/anil-kumar-a26a57136}}
+\end{tabularx} \\[5pt]
+
+% ---------------- Summary ----------------
+\section{Professional Summary}
+\color[HTML]{1C033C}
+\textbf{Senior Software Engineer with 3+ years of experience} delivering scalable microservices and high-performance APIs by applying event-driven architectures and cloud-native design principles, resulting in improved system reliability, security, and operational efficiency across large-scale enterprise platforms.
+
+% ---------------- Skills ----------------
+\section{Skills}
+\color[HTML]{1C033C}\textbf{Languages:} Java, Python, C, C++, JavaScript, PHP, HTML, CSS\\[1pt]
+\color[HTML]{1C033C}\textbf{Frameworks:} Spring Boot, Flutter, Django, Bootstrap, FastAPI\\[1pt]
+\color[HTML]{1C033C}\textbf{Queues:} RabbitMQ, Kafka, Solace\\[1pt]
+\color[HTML]{1C033C}\textbf{Databases:} MongoDB, MySQL\\[1pt]
+\color[HTML]{1C033C}\textbf{Technologies \& Tools:} Jenkins, Grafana, Kibana, Git, Elasticsearch
+
+% ---------------- Experience ----------------
+\section{Work Experience}
+\begin{tabularx}{\linewidth}{ @{}l r@{} }
+\textbf{{Airtel, Gurugram}} \hfill \color[HTML]{371e77} July 2022 - Present \\[2pt]
+\color[HTML]{371e77}\textbf{\textit{Senior Software Engineer}}\ \hfill \color[HTML]{4B28A4} \\[2pt]
+\begin{minipage}[t]{\linewidth}
+    \begin{itemize}[nosep,after=\strut, leftmargin=2em, itemsep=0pt]
+        \item \textbf{Enhanced runtime performance by 40\% and reduced technical debt} by migrating the platform from Spring Boot 2 to Spring Boot 3 and upgrading Java from 8 to 21, enabling adoption of modern language and framework features.
+        \item \textbf{Reduced incident resolution time by 90\%} by creating an AI-powered agent that performed alert RCA analysis and automated Jira issue creation via Telegram, improving SRE operational efficiency.
+        \item \textbf{Improved order tracking efficiency by 35\%} by implementing an event-driven update architecture on the Airtel Thanks for Business platform, enabling real-time and consistent order lifecycle updates.
+        \item \textbf{Increased event accuracy from 85\% to 99\%} by introducing advanced validation and consistency checks, resulting in highly reliable order status updates.
+        \item \textbf{Reduced critical production incidents by 40\%} by implementing RBAC, circuit breaker patterns, and intelligent retry mechanisms, significantly improving platform security and resilience.
+        \item \textbf{Accelerated product onboarding by 70\%} by building a config-driven onboarding framework, minimizing manual intervention and enabling faster launch of 5 new business products.
+        \item \textbf{Delivered real-time analytics pipelines} using MongoDB Change Streams and Kafka Connect for continuous data publishing.
+        \item \textbf{Improved system availability and fault tolerance} by eliminating startup dependencies on the Aerospike cluster across microservices, ensuring graceful degradation during infrastructure outages.
+        \item \textbf{Strengthened system modularity and fault tolerance} by designing optimized microservices for order lifecycle management, ensuring high availability and seamless service isolation.
+        \item Java, Python, SpringBoot, Fast API, RabbitMQ, Kafka, Solace, MongoDB, Jenkins, Grafana, Kibana, Git, Elasticsearch
+    \end{itemize}
+\end{minipage}
+\end{tabularx}
+
+% ---------------- Education ----------------
+\section{Education}
+\begin{tabularx}{\linewidth}{ @{}l r@{} }
+\color[HTML]{1C033C} \textbf{NIT Bhopal} & \hfill \color[HTML]{371e77} July 2018 - May 2022 \\
+\color[HTML]{371e77} \textbf{B.Tech in Computer Science and Engineering} & \hfill \color[HTML]{4B28A4} \textit{\textbf{CGPA: 8.30/10}} \\[3pt]
+\multicolumn{2}{@{}X@{}}{\textbf{Relevant Coursework:} Object Oriented Programming, Databases, Discrete Maths, Data Structures and Algorithms, Operating Systems, Computer Networks, Machine Learning, Data Mining, Advance Data Structures and Algorithms, Information Retrieval, Image Processing}
+\end{tabularx}
+
+% ---------------- Projects ----------------
+\section{Project Work}
+\begin{tabularx}{\linewidth}{ @{}l r@{} }
+\begin{minipage}[t]{\linewidth}
+    \begin{itemize}[nosep,after=\strut, leftmargin=2em, itemsep=1pt]
+
+        \item \textbf{Flutter News App :} | Dart, Flutter, FirebaseDB, Youtube API, News API
+        \begin{itemize}[nosep, leftmargin=1.5em, itemsep=0pt]
+            \item \textbf{Architected and Developed:}
+            Led the high-level design and implementation of complex application features, ensuring seamless integration of NewsAPI and YouTubeAPI for real-time news and video updates with <2s latency.
+            \item \textbf{Integration and Performance:}
+            Ensured real-time data synchronization and optimized API consumption to deliver fast and reliable content updates.
+            \item \textbf{Maintenance and Support:}
+            Improved database efficiency by 30\% through stored procedure optimization and automated log file cleanup, ensuring smooth app performance.
+        \end{itemize}
+
+        \item \textbf{Android Vision Improvement System :} | Java, Python, Android Studio
+        \begin{itemize}[nosep, leftmargin=1.5em, itemsep=0pt]
+            \item \textbf{Enhanced Accessibility for the Visually Impaired:}
+            Our solution empowers blind individuals with real-time text-to-speech conversion, enabling them to read any text aloud instantly, making printed materials, digital text, and labels easily accessible with latency < 1s.
+            \item \textbf{Comprehensive Environmental Awareness:}
+            Integrated Indian currency recognition with 95\% detection accuracy and lighting assessment, enabling secure transactions and safer navigation.
+        \end{itemize}
+
+    \end{itemize}
+\end{minipage}
+\end{tabularx}
+
+\end{document}

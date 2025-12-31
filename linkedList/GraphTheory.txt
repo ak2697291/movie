@@ -227,3 +227,85 @@ i) Kosaraju's Algorithm
 
     e) Time Complexity:
         → O(V + E)
+
+
+------
+6. Binary Lifting (k-th Ancestor):
+
+i) Purpose:
+→ Efficiently find the k-th ancestor of a node in a tree.
+
+ii) Core Idea:
+→ Precompute ancestors of each node at powers of two (2⁰, 2¹, 2², …).
+→ Use the binary representation of k to jump ancestors in O(log N) time.
+
+iii) Data Structures Used:
+- up[node][j]: Stores the 2^j-th ancestor of node
+- depth[]: Stores depth of each node from the root
+- Adjacency list: To represent the tree
+
+iv) Steps:
+
+i) Preprocessing Phase:
+    a) Perform DFS from the root node:
+        → Set up[node][0] as the immediate parent
+        → Compute depth[node]
+
+    b) Build the binary lifting table:
+        → For j = 1 to logN:
+            - For each node i:
+                up[i][j] = up[ up[i][j-1] ][j-1]
+
+ii) Query Phase (Finding k-th Ancestor):
+    a) Convert k to binary form
+    b) For each bit j set in k:
+        → Move node to up[node][j]
+    c) The final node obtained is the k-th ancestor
+
+v) Time Complexity:
+→ Preprocessing: O(N log N)
+→ Each Query: O(log N)
+→ Space Complexity: O(N log N)
+
+
+------
+7. Lowest Common Ancestor (LCA) using Binary Lifting:
+
+i) Purpose:
+→ Find the lowest (deepest) common ancestor of two nodes in a tree.
+
+ii) Core Idea:
+→ Use binary lifting to first make both nodes at the same depth.
+→ Lift both nodes together until their ancestors differ.
+
+iii) Data Structures Used:
+- up[node][j]: Stores the 2^j-th ancestor of node
+- depth[]: Stores depth of nodes
+- Binary lifting table (preprocessed)
+
+iv) Steps:
+
+i) Preprocessing Phase:
+    → Same as Binary Lifting
+    → DFS to compute depth and immediate parent
+    → Build binary lifting table
+
+ii) LCA Query Phase:
+    a) If depth[u] ≠ depth[v]:
+        → Lift the deeper node up to the same depth as the other
+
+    b) If u == v:
+        → u is the LCA
+
+    c) Otherwise:
+        → For j from logN down to 0:
+            - If up[u][j] ≠ up[v][j]:
+                → Lift both u and v to their 2^j-th ancestors
+
+    d) After the loop:
+        → The parent of either node is the LCA
+
+v) Time Complexity:
+→ Preprocessing: O(N log N)
+→ Each LCA Query: O(log N)
+→ Space Complexity: O(N log N)

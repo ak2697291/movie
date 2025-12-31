@@ -1,0 +1,31 @@
+Points to Remember:
+1. we need to write the sentences in active voice.
+2. we should write all the points like (Accomplished X by implementing Y which led to Z)
+3. we should not repeat single word multiple times like (Led, Worked).
+
+
+
+
+
+
+
+Different Professional Summary:
+1. Senior Software Engineer with 3+ years of experience in designing and developing scalable microservices and APIs. Proven track record of optimizing system performance, enhancing security, and improving operational efficiency through innovative solutions.
+
+
+Work Experience all points
+\item \textbf{Enhanced runtime performance by 40\% and reduced technical debt} by migrating the platform from Spring Boot 2 to Spring Boot 3 and upgrading Java from 8 to 21, enabling adoption of modern language and framework features.
+\item \textbf{Reduced incident resolution time by 90\%} by creating an AI-powered agent that performed alert RCA analysis and automated Jira issue creation via Telegram, improving SRE operational efficiency.
+\item \textbf{Improved order tracking efficiency by 35\%} by implementing an event-driven update architecture on the Airtel Thanks for Business platform, enabling real-time and consistent order lifecycle updates.
+\item \textbf{Increased event accuracy from 85\% to 99\%} by introducing advanced validation and consistency checks, resulting in highly reliable order status updates.
+\item \textbf{Reduced critical production incidents by 40\%} by implementing RBAC, circuit breaker patterns, and intelligent retry mechanisms, significantly improving platform security and resilience.
+\item \textbf{Accelerated product onboarding by 70\%} by building a config-driven onboarding framework, minimizing manual intervention and enabling faster launch of 5 new business products.
+\item \textbf{Delivered real-time analytics pipelines} using MongoDB Change Streams and Kafka Connect for continuous data publishing.
+\item \textbf{Improved system availability and fault tolerance} by eliminating startup dependencies on the Aerospike cluster across microservices, ensuring graceful degradation during infrastructure outages.
+\item \textbf{Strengthened system modularity and fault tolerance} by designing optimized microservices for order lifecycle management, ensuring high availability and seamless service isolation.
+\item Java, Python, SpringBoot, Fast API, RabbitMQ, Kafka, Solace, MongoDB, Jenkins, Grafana, Kibana, Git, Elasticsearch
+
+Not So much useful points.
+\item \textbf{Enabled high-volume order processing and customer interactions} by developing scalable Spring Boot REST APIs, supporting millions of requests with low latency and high reliability.
+\item \textbf{Strengthened system modularity and fault tolerance} by designing optimized microservices for order lifecycle management, ensuring high availability and seamless service isolation.
+
