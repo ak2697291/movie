@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>For My Love ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 30px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        button {
+            background: white;
+            color: #ff4b7d;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            background: #ffe6ec;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .hearts span {
+            position: absolute;
+            bottom: -20px;
+            font-size: 24px;
+            animation: floatUp 6s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .final {
+            font-size: 2.5rem;
+            animation: fadeIn 2s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="step1">
+    <h1>Hey My Love ❤️</h1>
+    <p>
+        From the moment you came into my life,<br>
+        everything became brighter, warmer, and happier.
+    </p>
+    <button onclick="nextStep()">Click Me 💕</button>
+</div>
+
+<div class="container hidden" id="step2">
+    <h1>You Mean The World To Me 🌍</h1>
+    <p>
+        Every smile of yours makes my day.<br>
+        Every moment with you feels like magic ✨
+    </p>
+    <button onclick="finalStep()">One More Surprise 💍</button>
+</div>
+
+<div class="container hidden" id="step3">
+    <h1 class="final">Will You Always Be Mine? ❤️</h1>
+    <button onclick="yes()">YES 💖</button>
+    <button onclick="no()">NO 😜</button>
+</div>
+
+<div class="container hidden" id="yesMessage">
+    <h1 class="final">I Knew It! 😍</h1>
+    <p>
+        I promise to love you, respect you,<br>
+        and stand by you forever 💞
+    </p>
+    <h2>💍 I Love You 💍</h2>
+</div>
+
+<div class="hearts" id="hearts"></div>
+
+<script>
+    function nextStep() {
+        document.getElementById("step1").classList.add("hidden");
+        document.getElementById("step2").classList.remove("hidden");
+    }
+
+    function finalStep() {
+        document.getElementById("step2").classList.add("hidden");
+        document.getElementById("step3").classList.remove("hidden");
+    }
+
+    function yes() {
+        document.getElementById("step3").classList.add("hidden");
+        document.getElementById("yesMessage").classList.remove("hidden");
+    }
+
+    function no() {
+        alert("Nice try 😜 You know the answer is YES ❤️");
+    }
+
+    // Floating hearts
+    const heartsContainer = document.getElementById("hearts");
+
+    setInterval(() => {
+        const heart = document.createElement("span");
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+        heartsContainer.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 6000);
+    }, 300);
+</script>
+
+</body>
+</html>
